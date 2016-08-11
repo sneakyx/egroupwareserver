@@ -4,7 +4,7 @@ This dockerfile builds an eGroupware container. The installation is a manual ins
 You'll also need a MySQL or MariaDB container for the database. 
 
 ## Egroupware Version
-installs Version 16.1.20160715 of egroupware
+installs Version 16.1.20160810 of egroupware
 For more information on egroupware read here: www.egroupware.org
 
 # Quick info
