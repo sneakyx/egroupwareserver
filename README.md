@@ -47,7 +47,7 @@ If all variables are set or You want to run the normal setup, just use
 	sneaky/egroupware	
 
 
-Otherwise use
+Otherwise the header.inc.php will be overwritten - then use
 
 	docker run -d \
 	--name egroupware-xxx \
@@ -74,7 +74,7 @@ If Your header.inc.php is still the same, You don't have to do anything- just lo
 If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
 
 # Additional info
-Change alle passwords from 1234 to Your own password. 
+Change all passwords from 1234 to Your own password. 
 
 Remember to put the following informations external, otherwise all data will be lost after restarting or updating the image:
 - folder for egroupware
