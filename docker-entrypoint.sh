@@ -8,7 +8,7 @@ set_config() {
 	value="$2"
 	php_escaped_value="$(php -r 'var_export($argv[1]);' "$value")"
 	sed_escaped_value="$(echo "$php_escaped_value" | sed 's/[\/&]/\\&/g')"
-	sed -ri "s/(['\"])?\{$key\}(['\"])?/$sed_escaped_value/" /var/www/html/egroupware/header.inc.php
+	sed -ri "s/(['\"])?\{$key\}(['\"])?/$sed_escaped_value/" /var/lib/egroupware/header.inc.php
 }
 
 
