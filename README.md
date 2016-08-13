@@ -64,10 +64,10 @@ Otherwise the header.inc.php will be overwritten - then use
 ### Logging in
 If You started the image for first time, You have to login via
 	
-	http://ipOfYourServer:4321/egroupware
+	http://ipOfYourServer:4321/
 For normal setup (without header information- see above) or
 	
-	http://ipOfYourServer:4321/egroupware/setup
+	http://ipOfYourServer:4321/setup
 For setup with provided header information. Please change header and config password- this is a security thing! The Setup admin and Header admin can change Your whole installation!
 
 If Your header.inc.php is still the same, You don't have to do anything- just login. 

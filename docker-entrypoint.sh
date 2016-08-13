@@ -5,10 +5,11 @@ set -e
 # V2016-08-13-18-00
 
 # test if variables are passed
-if  [! -z $(EGROUPWARE_HEADER_ADMIN_USER) ]; then
+
+if  [ ! -z "$EGROUPWARE_HEADER_ADMIN_USER" ]; then
   
   	# copy header template
-  	cp /var/www/egroupware/header.inc.template /var/lib/egroupware/header.inc.php
+  	cp /var/www/html/egroupware/header.inc.template /var/lib/egroupware/header.inc.php
   
 	# Replace {key} with value
 	set_config() {
@@ -89,31 +90,36 @@ fi # if variables are passed
 # data directories
 #
 	
-mkdir -p /var/lib/egroupware/default/backup
-mkdir -p /var/lib/egroupware/default/files
+mkdir --parents /var/lib/egroupware/default/backup
+mkdir --parents /var/lib/egroupware/default/files
+
+# create empty header file, if not exists
+touch /var/lib/egroupware/header.inc.php
+
 chown -R www-data:www-data /var/lib/egroupware
 
-ln -s /var/lib/egroupware/header.inc.php /var/www/egroupware/header.inc.php
+ln -sf /var/lib/egroupware/header.inc.php /var/www/html/egroupware/header.inc.php
+chmod 700 /var/lib/egroupware/header.inc.php
 
-case "$1" in
-	app:start)
-		# Apache gets grumpy about PID files pre-existing
+##case "$1" in
+##	app:start)
+##		# Apache gets grumpy about PID files pre-existing
 		rm -f /var/run/apache2/apache2.pid
-		exec apache2 -DFOREGROUND
-		;;
-	*)
-		if [ -x $1 ]; then
-			$1
-		else
-			prog=$(which $1)
-			if [ -n "${prog}" ] ; then
-				shift 1
-				$prog $@
-			else
-				appHelp
-			fi
-		fi
-		;;
+		exec apache2 -DFOREGROUND 
+##		;;
+##	*)
+##		if [ -x $1 ]; then
+##			$1
+##		else
+##			prog=$(which $1)
+##			if [ -n "${prog}" ] ; then
+##				shift 1
+##				$prog $@
+##			else
+##				appHelp
+##			fi
+##		fi
+##		;;
 esac
 
 exit 0
