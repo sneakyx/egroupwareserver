@@ -4,7 +4,7 @@ MAINTAINER André Scholz <info@rothaarsystems.de>
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
 RUN apt-get update \
-        && apt-get install -y wget bzip2 zlib1g-dev re2c libmcrypt-dev \
+        && apt-get install -y wget bzip2 zlib1g-dev re2c libmcrypt-dev pwgen \
         && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20160810/egroupware-epl-16.1.20160810.tar.bz2 \
         && mv /var/www/egroupware*.tar.bz2 /var/www/egroupware.tar.bz2 \
         && tar -xjf /var/www/egroupware.tar.bz2 -C /var/www/html \
