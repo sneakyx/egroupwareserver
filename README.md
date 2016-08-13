@@ -15,7 +15,7 @@ This dockerfile installs Version 16.1.20160810 of egroupware
 
 # Installation / Configuration
 ### Data directories (storage)
-First, it would be wise to create directories for storing everything in place. I usually pack everything into subfolders under the same superior directory. This way it's easier to create a backup using rsync. (Remeber to stop the database before creating a backup!)
+First, it would be wise to create directories for storing everything in place. I usually pack everything into subfolders under the same superior directory. This way it's easier to create a backup using rsync. (Remember to stop the database before creating a backup!)
 I suggest the following directory hierarchy:
 
 /home/egroupware/xxx/mysql  	-> Database
@@ -46,6 +46,7 @@ If all variables are set or You want to run the normal setup, just use
 	--link mysql-egroupware-xxx:mysql \
 	sneaky/egroupware	
 
+
 Otherwise use
 
 	docker run -d \
@@ -60,14 +61,20 @@ Otherwise use
 	sneaky/egroupware
 
 -> Please replace xxx with Your favourite name, 123456 with Your favourite password and 4321 with the port projected for using. If You don't want to map the port, just leave this line <-
-### Loggin in
+### Logging in
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/egroupware
 For normal setup (without header information- see above) or
 	
 	http://ipOfYourServer:4321/egroupware/setup
-For setup with provided header information. Please change header and config password- this is a security thing!
+For setup with provided header information. Please change header and config password- this is a security thing! The Setup admin and Header admin can change Your whole installation!
+
+If Your header.inc.php is still the same, You don't have to do anything- just login. 
+If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
+
+# Additional info
+Change alle passwords from 1234 to Your own password. 
 
 Remember to put the following informations external, otherwise all data will be lost after restarting or updating the image:
 - folder for egroupware

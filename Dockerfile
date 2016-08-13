@@ -29,6 +29,7 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo date.timezone = $egr_timezone  >> /usr/local/etc/php/conf.d/uploads.ini
 
 COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80 443
 
