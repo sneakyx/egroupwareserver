@@ -28,6 +28,9 @@ RUN docker-php-ext-install mysqli \
 RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo date.timezone = $egr_timezone  >> /usr/local/etc/php/conf.d/uploads.ini
 
+COPY docker-entrypoint.sh /entrypoint.sh
+
 EXPOSE 80 443
 
-ENTRYPOINT ["/usr/sbin/apache2","-D"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["app:start"]
