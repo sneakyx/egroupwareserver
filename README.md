@@ -82,3 +82,5 @@ Remember to put the following informations external, otherwise all data will be 
 (see above for example directory hierarchy!)
 
 If you have any suggestions, just contact me via: info@rothaarsystems.de
+
+[![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com")
