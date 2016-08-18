@@ -28,13 +28,13 @@ I suggest the following directory hierarchy:
 ### start mysql container
 
 	docker run -d --name mysql-egroupware-xxx \
-	-e MYSQL_ROOT_PASSWORD= 1234 \
+	-e MYSQL_ROOT_PASSWORD=123456 \
 	-e MYSQL_DATABASE=egroupware \
 	-e MYSQL_USER=egroupware \
-	-e MYSQL_PASSWORD=1234 \
+	-e MYSQL_PASSWORD=123456 \
 	-v /home/egroupware/xxx/mysql:/var/lib/mysql mysql
 	
--> Please replace xxx with Your favourite name and 1234 with Your password! <-
+-> Please replace xxx with Your favourite name and 123456 with Your password! <-
 
 ### start egroupware container
 If all variables are set or You want to run the normal setup, just use
@@ -74,7 +74,7 @@ If Your header.inc.php is still the same, You don't have to do anything- just lo
 If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
 
 # Additional info
-Change all passwords from 1234 to Your own password. 
+Change all passwords from 123456 to Your own password. 
 
 Remember to put the following informations external, otherwise all data will be lost after restarting or updating the image:
 - folder for egroupware
@@ -84,3 +84,4 @@ Remember to put the following informations external, otherwise all data will be 
 If you have any suggestions, just contact me via: info@rothaarsystems.de
 
 [![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com")
+Get your own image badge on microbadger.com!

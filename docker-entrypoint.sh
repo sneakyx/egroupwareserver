@@ -9,7 +9,7 @@ set -e
 if  [ ! -z "$EGROUPWARE_HEADER_ADMIN_USER" ]; then
   
   	# copy header template
-  	cp /var/www/html/egroupware/header.inc.template /var/lib/egroupware/header.inc.php
+  	cp /var/www/html/egroupware/header.inc.php.template /var/lib/egroupware/header.inc.php
   
 	# Replace {key} with value
 	set_config() {
