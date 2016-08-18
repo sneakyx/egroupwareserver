@@ -47,27 +47,16 @@ If all variables are set or You want to run the normal setup, just use
 	sneaky/egroupware	
 
 
-Otherwise the header.inc.php will be overwritten - then use
-
-	docker run -d \
-	--name egroupware-xxx \
-	-e EGROUPWARE_HEADER_ADMIN_USER=admin \
-	-e EGROUPWARE_HEADER_ADMIN_PASSWORD=123456 \
-	-e EGROUPWARE_CONFIG_USER=admin \
-	-e EGROUPWARE_CONFIG_PASSWD=123456 \
-	-p 4321:80 \
-	-v /home/egroupware/xxx/data:/var/lib/egroupware \
-	--link mysql-egroupware-xxx:mysql \
-	sneaky/egroupware
-
--> Please replace xxx with Your favourite name, 123456 with Your favourite password and 4321 with the port projected for using. If You don't want to map the port, just leave this line <-
+-> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave this line <-
 ### Logging in
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
-For normal setup (without header information- see above) or
-	
-	http://ipOfYourServer:4321/setup
+For normal setup (without header information- see above) - If You use first time egroupware You have to enter the databse infos from the file
+
+	/home/egroupware/xxx/data/db-info.txt
+If you use the same egroupware installation a second time, You don't have to read this file any more. The docker-entrypoint.sh updates the info in the headerfile automaticly!
+
 For setup with provided header information. Please change header and config password- this is a security thing! The Setup admin and Header admin can change Your whole installation!
 
 If Your header.inc.php is still the same, You don't have to do anything- just login. 
