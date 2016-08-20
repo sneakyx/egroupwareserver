@@ -2,25 +2,30 @@
 
 This dockerfile builds an eGroupware container. The installation is a manual installation. As You can see in the dockerfile, it is based on php 5.6.
 You'll also need a MySQL or MariaDB container for the database.
-I wanted to install for personal use the visol/egroupware container, but I couldn't reach jrenggli at visol and it seems he doesn't update his egroupware dockerfile- so I made my own and just updated his file. 
+I wanted to install for personal use the visol/egroupware container, but I couldn't reach jrenggli at visol and it seems he doesn't update his egroupware dockerfile- so I made my own and not just updated his file. 
 
 # Egroupware
 ### General
-Egroupware is a very powerful open source groupware programm. It consists of a  calendar app, contacts, infolog, project manager, ticket system and more.
-If you need more information on egroupware, just take a look here: www.egroupware.org
+Egroupware is a very powerful open source groupware programm. It consists of a calendar app, contacts, infolog, project manager, ticket system and more.
+If you need more information on egroupware, just take a look here: [www.egroupware.org](http://www.egroupware.org)
 Although this is a unofficial dockerfile, it uses just the official sources! 
 
 ### Version
 This dockerfile installs Version 16.1.20160810 of egroupware
 
 # Installation / Configuration
+## helpful script 
+For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
+[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/cntainer_control.sh)
+
+## withtout script
+
 ### Data directories (storage)
 First, it would be wise to create directories for storing everything in place. I usually pack everything into subfolders under the same superior directory. This way it's easier to create a backup using rsync. (Remember to stop the database before creating a backup!)
 I suggest the following directory hierarchy:
 
 /home/egroupware/xxx/mysql  	-> Database
 /home/egroupware/xxx/data  	-> Egroupware Files, backups and header.inc
-
 
 	mkdir -p /home/egroupware/xxx/mysql /home/egroupware/xxx/data
 -> Please replace xxx with Your favourite name! <-
@@ -37,7 +42,7 @@ I suggest the following directory hierarchy:
 -> Please replace xxx with Your favourite name and 123456 with Your password! <-
 
 ### start egroupware container
-If all variables are set or You want to run the normal setup, just use
+To start the egroupware container, just use:
 
 	docker run -d \
 	--name egroupware-xxx \
@@ -46,20 +51,21 @@ If all variables are set or You want to run the normal setup, just use
 	--link mysql-egroupware-xxx:mysql \
 	sneaky/egroupware	
 
+-> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
 
--> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave this line <-
-### Logging in
+### First time logging in
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
-For normal setup (without header information- see above) - If You use first time egroupware You have to enter the databse infos from the file
+If You use first time egroupware You have to enter the database infos during the installation from the file
 
 	/home/egroupware/xxx/data/db-info.txt
-If you use the same egroupware installation a second time, You don't have to read this file any more. The docker-entrypoint.sh updates the info in the headerfile automaticly!
+This file is generated everytime the container starts.
 
-For setup with provided header information. Please change header and config password- this is a security thing! The Setup admin and Header admin can change Your whole installation!
+### Logging in with existing database and data 
 
-If Your header.inc.php is still the same, You don't have to do anything- just login. 
+If the file header.inc.php already exists (former installation), You don't have to read this file any more. The docker-entrypoint.sh updates the info in the headerfile automaticly!
+ 
 If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
 
 # Additional info
@@ -72,5 +78,4 @@ Remember to put the following informations external, otherwise all data will be 
 
 If you have any suggestions, just contact me via: info@rothaarsystems.de
 
-[![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com")
-Get your own image badge on microbadger.com!
+[![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com")[Get your own image badge on microbadger.com!](https://microbadger.com)

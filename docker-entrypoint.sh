@@ -2,8 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-08-18-22-50
-
+# V2016-08-20-15-50
   
   
 # Replace {key} with value
@@ -16,8 +15,6 @@ set_config() {
 
 }
 
-
-
 # database configuration
 #
 
@@ -29,6 +26,10 @@ fi
 
 if [ -f /var/lib/egroupware/header.inc.php ] ;
 # if header file exists correct the tcp-port and tcp address
+# otherwise (first time startup) the data has to be add manually while installation
+# read the necessary data from file /home/egroupware/xxx/data/db-info.txt 
+# xxx - is the directory you used for storing data
+
 then
 	
 	set_config 'DB_HOST' "$MYSQL_PORT_3306_TCP_ADDR"
@@ -45,11 +46,9 @@ mkdir --parents /var/lib/egroupware/default/files
 
 # create empty header file, if not exists
 touch /var/lib/egroupware/header.inc.php
-rm /var/lib/egroupware/db-config.txt
 
 # create file with database infos
-touch /var/lib/egroupware/db-info.txt
-echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR >> /var/lib/egroupware/db-config.txt
+echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR > /var/lib/egroupware/db-config.txt
 echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/db-config.txt  
 
 chown -R www-data:www-data /var/lib/egroupware
