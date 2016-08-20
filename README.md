@@ -1,6 +1,6 @@
 # General info
 
-This dockerfile builds an eGroupware container. The installation is a manual installation. As You can see in the dockerfile, it is based on php 5.6.
+This dockerfile builds an eGroupware container. As You can see in the dockerfile, it is based on php 5.6.
 You'll also need a MySQL or MariaDB container for the database.
 I wanted to install for personal use the visol/egroupware container, but I couldn't reach jrenggli at visol and it seems he doesn't update his egroupware dockerfile- so I made my own and not just updated his file. 
 
@@ -16,7 +16,7 @@ This dockerfile installs Version 16.1.20160810 of egroupware
 # Installation / Configuration
 ## helpful script 
 For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
-[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/cntainer_control.sh)
+[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
 
 ## withtout script
 
@@ -53,7 +53,7 @@ To start the egroupware container, just use:
 
 -> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
 
-### First time logging in
+## First time logging in
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
