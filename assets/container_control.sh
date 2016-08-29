@@ -90,7 +90,7 @@ case "$1" in
 			-p $5:80 \
 			-v /home/egroupware/$2/data:/var/lib/egroupware \
 			--link mysql-egroupware-$2:mysql \
-			sneaky/egroupware-apps
+			sneaky/egroupware:latest-extended
 		echo container was created/ updated
 	;;
 	*)	
