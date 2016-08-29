@@ -13,12 +13,12 @@ Although this is a unofficial dockerfile, it uses just the official sources!
 ### Version
 This dockerfile installs Version 16.1.20160810 of egroupware
 
-# Installation / Configuration
-## helpful script 
+# 1. Installation / Configuration
+## a) helpful script 
 For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
 [github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
 
-## without script
+## or b) without script
 
 ### Data directories (storage)
 First, it would be wise to create directories for storing everything in place. I usually pack everything into subfolders under the same superior directory. This way it's easier to create a backup using rsync. (Remember to stop the database before creating a backup!)
@@ -53,8 +53,8 @@ To start the egroupware container, just use:
 
 -> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
 
-## Setup Egroupware
-### First time logging in?
+## 2. Setup Egroupware
+### a) First time logging in?
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
@@ -64,14 +64,14 @@ You don't have to add databse info during installation manually - I updated the 
 - class.setup_process.inc.php
 this way the installation is a bit more automated.
    
-### Logging in with existing database and data? 
+### or b) Logging in with existing database and data? 
 
 If the file header.inc.php already exists (former installation), the docker-entrypoint.sh updates the database host ip and port in the header.inc.php automaticly!
  
 If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
 
-# Additional info
-Change all passwords from 123456 to Your own password. 
+# 3. Additional info
+Change all passwords from 123456 to Your own password! 
 
 Remember to put the following informations external, otherwise all data will be lost after updating the image:
 - folder for egroupware
