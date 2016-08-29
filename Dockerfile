@@ -1,45 +1,26 @@
-FROM php:5.6-apache
+FROM sneaky/egroupware:latest
 MAINTAINER André Scholz <info@rothaarsystems.de>
+# still beta
+# V 2016-08-29-207-30
 
-ENV DEBIAN_FRONTEND noninteractive
-ARG egr_timezone=Europe/Berlin
+# load newest version of apps
 RUN apt-get update \
-        && apt-get install -y wget bzip2 zlib1g-dev re2c libmcrypt-dev pwgen \
-        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20160810/egroupware-epl-16.1.20160810.tar.bz2 \
-        && mv /var/www/egroupware*.tar.bz2 /var/www/egroupware.tar.bz2 \
-        && tar -xjf /var/www/egroupware.tar.bz2 -C /var/www/html \
-        && rm /var/www/egroupware.tar.bz2
-# start manual installation
-
-RUN docker-php-ext-install mysqli \
-        && docker-php-ext-install pdo_mysql \
-        && docker-php-ext-install zip \
-        && docker-php-ext-install mcrypt \
-        && docker-php-ext-install mbstring \
-        && apt-get -y install libtidy-dev libjpeg62-turbo-dev libpng12-dev libldap2-dev \
-        && docker-php-ext-install tidy \
-        && docker-php-ext-install bcmath \
-        && docker-php-ext-configure gd --with-jpeg-dir=/usr/lib \
-        && docker-php-ext-install gd \
-        && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/  \
-        && docker-php-ext-install ldap
-# edit php.ini
-
-RUN touch /usr/local/etc/php/conf.d/uploads.ini \
-    && echo date.timezone = $egr_timezone  >> /usr/local/etc/php/conf.d/uploads.ini \
-    && echo session.save_path = /var/tmp  >> /usr/local/etc/php/conf.d/uploads.ini
-
-
-COPY docker-entrypoint.sh /entrypoint.sh 
-COPY assets/apache.conf /etc/apache2/apache2.conf
-# there are two updated files
-# because manual installation of egroupware leaves some infos blank
-COPY assets/class*.* /var/www/html/egroupware/setup/inc/
-
-RUN chmod +x /entrypoint.sh \
-	&& chmod 644 /var/www/html/egroupware/setup/inc/*.* 
+	&& apt-get install unzip \
+	&& wget -P /var/www http://downloads.sourceforge.net/project/rosin/current/rosine-2016-08-27-21-45.zip \
+	&& mv /var/www/rosine*.zip /var/www/html/egroupware/rosine.zip \
+	&& unzip /var/www/html/egroupware/rosine.zip -d /var/www/html/egroupware/ \
+	&& mv /var/www/html/egroupware/ROSInE /var/www/html/egroupware/rosine \
+	&& rm /var/www/html/egroupware/rosine.zip \
+	&& chmod -R +r+x /var/www/html/egroupware/rosine  
+	
+# overwrite standard html from Egroupware because my apps use HTML5 and chmod all changed egroupware files
+RUN		sed -i -e 1c"<!-- BEGIN head --><!DOCTYPE html>" /var/www/html/egroupware/pixelegg/head.tpl \
+	&& 	sed -i -e 2c"<html>" /var/www/html/egroupware/pixelegg/head.tpl 
+# overwrite docker-entrypoint.sh
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh 
 
 EXPOSE 80 443
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["app:start"]
+CMD ["app:start"] 

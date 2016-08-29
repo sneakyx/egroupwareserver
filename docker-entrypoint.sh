@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-08-20-15-50
+# V2016-08-27-17-27
   
   
 # Replace {key} with value
@@ -43,6 +43,7 @@ fi
 	
 mkdir --parents /var/lib/egroupware/default/backup
 mkdir --parents /var/lib/egroupware/default/files
+mkdir --parents /var/lib/egroupware/default/rosine/templates
 
 # create empty header file, if not exists
 touch /var/lib/egroupware/header.inc.php

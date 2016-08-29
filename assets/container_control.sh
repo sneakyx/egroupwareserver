@@ -5,21 +5,19 @@
 #    this script makes it easier to build a new egroupware container    #
 # usage:        build_new_container.sh $name $pass1 $pass2 $port $action#
 # Paramters:                                                            #
-#               $action create/stop/delete/start/update/full-delete     #
-#                       (full-delete deletes also database -all Your    #
-#                       data will be lost- use with cation!)            #
-#                       (start means existing container!)               # 
+#               $action create/stop/delete/start/update container       #
+#                       (start means existing container!)  (needed)     # 
 #               $name   exchange with Your favorite name   (needed)     #
 #               $pass1  password for mysql admin    \   only used       #
 #               $pass2  password for egroupware user >  with parameter  #
 #               $port   which port should be used?  /   create!         #
 #-----------------------------------------------------------------------#
-#      V 2016-08-20-17-30  made by sneaky(x) or Rothaar Systems         #
+#      V 2016-08-23-21-30  made by sneaky(x) or Rothaar Systems         #
+#                Version for my egroupware apps                         #
 #                        dedicated to my family                         #
 #                   released under Apache 2.0 licence                   #
 #               http://www.apache.org/licenses/LICENSE-2.0              #
 #########################################################################
-
 if  [ -z $2 ]  ; then
         echo >&2 'error: missing parameters'
         echo >&2 'usage: build_new_container.sh start/stop/update/create/delete/full-delete $name'
@@ -92,7 +90,7 @@ case "$1" in
 			-p $5:80 \
 			-v /home/egroupware/$2/data:/var/lib/egroupware \
 			--link mysql-egroupware-$2:mysql \
-			sneaky/egroupware
+			sneaky/egroupware-apps
 		echo container was created/ updated
 	;;
 	*)	
