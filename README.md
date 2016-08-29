@@ -6,7 +6,7 @@ I wanted to install for personal use the visol/egroupware container, but I could
 
 There are 2 useable versions of this image:
 - latest: this is a basic version with just egroupware installed
-- latest-extended: (available later this day) this is an extended version of egroupware. It contains also my apps (at the moment just rosine, but see below)
+- latest-extended: this is an extended version of egroupware. It contains also my apps (at the moment just rosine, but see below)
 
 
 # Egroupware
@@ -18,7 +18,7 @@ Although this is a unofficial dockerfile, it uses just the official sources!
 ### Version
 This dockerfile installs Version 16.1.20160810 of egroupware
 
-# Extended version (tag: latest-extend )
+# Extended version (tag: latest-extended )
 This version extends the basic egroupware installation with my apps. At the moment, it's just my newest app "ROSInE".
 
 ## ROSInE (Rothaar Systems Open Source Incoive for Egroupware) 
@@ -32,8 +32,8 @@ It can easily configurated to assist You with your work. It HTML5 and CSS3. If Y
 # Installation / Configuration
 ## helpful script 
 For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
-[github-basic](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
-[github-extended](https://github.com/sneakyx/egroupwareserver/blob/master-with-apps/assets/container_control.sh)
+[github(basic)](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
+[github(extended)](https://github.com/sneakyx/egroupwareserver/blob/master-with-apps/assets/container_control.sh)
 
 ## without script
 
