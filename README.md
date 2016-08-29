@@ -4,6 +4,11 @@ This dockerfile builds an eGroupware container. As You can see in the dockerfile
 You'll also need a MySQL or MariaDB container for the database.
 I wanted to install for personal use the visol/egroupware container, but I couldn't reach jrenggli at visol and it seems he doesn't update his egroupware dockerfile- so I made my own and not just updated his file. 
 
+There are 2 useable versions of this image:
+- latest: this is a basic version with just egroupware installed
+- latest-extended: (available later this day) this is an extended version of egroupware. It contains also my apps (at the moment just rosine, but see below)
+
+
 # Egroupware
 ### General
 Egroupware is a very powerful open source groupware programm. It consists of a calendar app, contacts, infolog, project manager, ticket system and more.
@@ -13,10 +18,22 @@ Although this is a unofficial dockerfile, it uses just the official sources!
 ### Version
 This dockerfile installs Version 16.1.20160810 of egroupware
 
+# Extended version (tag: latest-extend )
+This version extends the basic egroupware installation with my apps. At the moment, it's just my newest app "ROSInE".
+
+## ROSInE (Rothaar Systems Open Source Incoive for Egroupware) 
+
+This is an easy-to-use application for writing invoices, orders, offers and delivery notes. It uses the egroupware addressbook.
+It can easily configurated to assist You with your work. It HTML5 and CSS3. If You need special templates and PHP files, feel free to contact me.
+
+## my other apps
+...will be added some days later.
+
 # Installation / Configuration
 ## helpful script 
 For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
-[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
+[github-basic](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
+[github-extended](https://github.com/sneakyx/egroupwareserver/blob/master-with-apps/assets/container_control.sh)
 
 ## without script
 
@@ -41,8 +58,9 @@ I suggest the following directory hierarchy:
 	
 -> Please replace xxx with Your favourite name and 123456 with Your password! <-
 
-### start egroupware container
+### start egroupware container 
 To start the egroupware container, just use:
+basic version:
 
 	docker run -d \
 	--name egroupware-xxx \
@@ -50,7 +68,15 @@ To start the egroupware container, just use:
 	-v /home/egroupware/xxx/data:/var/lib/egroupware \
 	--link mysql-egroupware-xxx:mysql \
 	sneaky/egroupware	
+extended version:
 
+	docker run -d \
+	--name egroupware-xxx \
+	-p 4321:80 \
+	-v /home/egroupware/xxx/data:/var/lib/egroupware \
+	--link mysql-egroupware-xxx:mysql \
+	sneaky/egroupware:extended
+	
 -> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
 
 ## Setup Egroupware
