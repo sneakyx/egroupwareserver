@@ -32,8 +32,8 @@ if [ -f /var/lib/egroupware/header.inc.php ] ;
 
 then
 	
-	set_config 'DB_HOST' "$MYSQL_PORT_3306_TCP_ADDR"
-	set_config 'DB_PORT' "$MYSQL_PORT_3306_TCP_PORT"
+	set_config 'db_host' "$MYSQL_PORT_3306_TCP_ADDR"
+	set_config 'db_port' "$MYSQL_PORT_3306_TCP_PORT"
 
 fi	
 		

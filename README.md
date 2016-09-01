@@ -63,7 +63,7 @@ If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
 
-You don't have to add databse info during installation manually - I updated the files 
+You don't have to add database info during installation manually - I updated the files 
 - class.setup_header.inc.php
 - class.setup_process.inc.php
 this way the installation is a bit more automated.
