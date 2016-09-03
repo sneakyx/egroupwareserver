@@ -82,6 +82,10 @@ Remember to put the following informations external, otherwise all data will be 
 - Mysql Database files
 (see above for example directory hierarchy!)
 
+If You restart the docker container (former stoped with "docker stop xxx" and now start with "docker start xxx") don't forget to update the mysql-IP-adress by using
+
+	docker exec -it egroupware-$2 /docker-entrypoint.sh update
+
 If you have any suggestions, questions or You need a special egroupware application, just contact me via: info@rothaarsystems.de
 
 [![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com") [Get your own image badge on microbadger.com!](https://microbadger.com)

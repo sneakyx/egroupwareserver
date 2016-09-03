@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-08-20-15-50
+# V2016-09-03-10-56
   
   
 # Replace {key} with value
@@ -11,7 +11,7 @@ set_config() {
 	value="$2"
 	php_escaped_value="$(php -r 'var_export($argv[1]);' "$value")"
 	sed_escaped_value="$(echo "$php_escaped_value" | sed 's/[\/&]/\\&/g')"
-    sed -ri "s/(['\"])?$key(['\"]).*/\'$key\' => \'$sed_escaped_value\',/" /var/lib/egroupware/header.inc.php
+    sed -ri "s/(['\"])?$key(['\"]).*/\'$key\' => $sed_escaped_value,/" /var/lib/egroupware/header.inc.php
 
 }
 
@@ -56,8 +56,9 @@ chown -R www-data:www-data /var/lib/egroupware
 ln -sf /var/lib/egroupware/header.inc.php /var/www/html/egroupware/header.inc.php
 chmod 700 /var/lib/egroupware/header.inc.php
 
-# Apache gets grumpy about PID files pre-existing
-rm -f /var/run/apache2/apache2.pid
-exec apache2 -DFOREGROUND 
-
+if  [ $1 != "update" ]; then  # if container isn't restarted
+	# Apache gets grumpy about PID files pre-existing
+	rm -f /var/run/apache2/apache2.pid
+	exec apache2 -DFOREGROUND 
+fi
 exit 0
