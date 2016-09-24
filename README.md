@@ -67,6 +67,7 @@ You don't have to add database info during installation manually - I updated the
 - class.setup_header.inc.php
 - class.setup_process.inc.php
 this way the installation is a bit more automated.
+Now the installation imports also an existing database backup from egroupware! 
    
 ### b) Logging in with existing database and data? 
 
