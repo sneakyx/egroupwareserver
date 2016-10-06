@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
 RUN apt-get update \
         && apt-get install -y wget bzip2 libbz2-dev zlib1g-dev re2c libmcrypt-dev pwgen \
-        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20160905/egroupware-epl-16.1.20160905.tar.bz2\
+        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20161006/egroupware-epl-16.1.20161006.tar.bz2\
         && mv /var/www/egroupware*.tar.bz2 /var/www/egroupware.tar.bz2 \
         && tar -xjf /var/www/egroupware.tar.bz2 -C /var/www/html \
         && rm /var/www/egroupware.tar.bz2
