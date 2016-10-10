@@ -1,6 +1,6 @@
 FROM php:5.6-apache
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2016-09-24-22-26
+# Version 2016-10-10-09-48
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
