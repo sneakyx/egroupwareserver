@@ -32,7 +32,7 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo session.save_path = /var/tmp  >> /usr/local/etc/php/conf.d/uploads.ini
 
 
-COPY docker-entrypoint.sh /bin/entrypoint.sh 
+COPY assets/docker-entrypoint.sh /bin/entrypoint.sh 
 COPY assets/apache.conf /etc/apache2/apache2.conf
 # there are two updated files
 # because manual installation of egroupware leaves some infos blank
