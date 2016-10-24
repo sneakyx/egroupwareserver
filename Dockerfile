@@ -1,6 +1,6 @@
 FROM php:5.6-apache
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2016-10-10-09-48
+# Version 2016-10-24-21-20
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
@@ -32,16 +32,16 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo session.save_path = /var/tmp  >> /usr/local/etc/php/conf.d/uploads.ini
 
 
-COPY docker-entrypoint.sh /entrypoint.sh 
+COPY docker-entrypoint.sh /bin/entrypoint.sh 
 COPY assets/apache.conf /etc/apache2/apache2.conf
 # there are two updated files
 # because manual installation of egroupware leaves some infos blank
 COPY assets/class*.* /var/www/html/egroupware/setup/inc/
 
-RUN chmod +x /entrypoint.sh \
+RUN chmod +x /bin/entrypoint.sh \
 	&& chmod 644 /var/www/html/egroupware/setup/inc/*.* 
 
 EXPOSE 80 443
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/bin/entrypoint.sh"]
 CMD ["app:start"]
