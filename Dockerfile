@@ -38,7 +38,7 @@ COPY assets/apache.conf /etc/apache2/apache2.conf
 # because manual installation of egroupware leaves some infos blank
 COPY assets/class*.* /var/www/html/egroupware/setup/inc/
 
-RUN chmod +x /entrypoint.sh \
+RUN chmod +x /bin/entrypoint.sh \
 	&& chmod 644 /var/www/html/egroupware/setup/inc/*.* 
 
 EXPOSE 80 443
