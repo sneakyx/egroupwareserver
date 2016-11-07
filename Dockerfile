@@ -1,12 +1,12 @@
 FROM php:5.6-apache
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2016-10-24-21-20
+# Version 2016-11-07-19-01
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
 RUN apt-get update \
         && apt-get install -y wget bzip2 libbz2-dev zlib1g-dev re2c libmcrypt-dev pwgen \
-        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20161102/egroupware-epl-16.1.20161102.tar.bz2\
+        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20161107/egroupware-epl-16.1.20161107.tar.bz2\
         && mv /var/www/egroupware*.tar.bz2 /var/www/egroupware.tar.bz2 \
         && tar -xjf /var/www/egroupware.tar.bz2 -C /var/www/html \
         && rm /var/www/egroupware.tar.bz2
