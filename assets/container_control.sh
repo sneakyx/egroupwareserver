@@ -3,7 +3,7 @@
 #########################################################################
 #                          container_control.sh                         #
 #    this script makes it easier to build a new egroupware container    #
-# usage:        container_control.sh $name $pass1 $pass2 $port $action  #
+# usage:        container_control.sh $action $name $pass1 $pass2 $port  #
 # Paramters:                                                            #
 #               $action create/stop/delete/start/update/full-delete     #
 #                       (full-delete deletes also database -all Your    #
@@ -14,7 +14,7 @@
 #               $pass2  password for egroupware user >  with parameter  #
 #               $port   which port should be used?  /   create!         #
 #-----------------------------------------------------------------------#
-#      V 2016-09-24-10-30  made by sneaky(x) or Rothaar Systems         #
+#      V 2016-12-28-07-55  made by sneaky(x) or Rothaar Systems         #
 #                        dedicated to my family                         #
 #                   released under Apache 2.0 licence                   #
 #               http://www.apache.org/licenses/LICENSE-2.0              #
