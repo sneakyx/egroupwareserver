@@ -45,7 +45,6 @@ I suggest the following directory hierarchy:
 
 ### b) 3. start egroupware container 
 To start the egroupware container, just use:
-basic version:
 
 	docker run -d \
 	--name egroupware-xxx \
@@ -55,7 +54,7 @@ basic version:
 	--link mysql-egroupware-xxx:mysql \
 	sneaky/egroupware	
 	
--> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
+-> Please replace xxx with Your favourite name and 4321 with the port projected for using.<-
 -> The SUBFOLDER variable is optional, if You leave it, the login address is without subfolder!<-
 
 ## 3.3 Setup Egroupware
