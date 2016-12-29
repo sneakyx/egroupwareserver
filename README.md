@@ -51,21 +51,30 @@ basic version:
 	--name egroupware-xxx \
 	-p 4321:80 \
 	-v /home/egroupware/xxx/data:/var/lib/egroupware \
+	-e SUBFOLDER=/egroupware \
 	--link mysql-egroupware-xxx:mysql \
 	sneaky/egroupware	
 	
 -> Please replace xxx with Your favourite name and 4321 with the port projected for using. If You don't want to map the port, just leave the line "-p 4321:80"<-
+-> The SUBFOLDER variable is optional, if You leave it, the login address is without subfolder!<-
 
 ## 3.3 Setup Egroupware
 ### a) First time logging in?
 If You started the image for first time, You have to login via
 	
 	http://ipOfYourServer:4321/
+or
+
+	http://ifOfYourServer:4321/egroupware
+
+depending on Your subfolder variable!
 
 You don't have to add database info during installation manually - I updated the files 
 - class.setup_header.inc.php
 - class.setup_process.inc.php
 this way the installation is a bit more automated.
+If You have another subfolder than "/egroupware" please make sure that Your data directory is set to "/var/lib/egroupware/default/files" and Your backup is set to "/var/lib/egroupware/default/backup" - otherwise You will loose Your data!
+ 
 Now the installation imports also an existing database backup from egroupware! 
    
 ### b) Logging in with existing database and data? 

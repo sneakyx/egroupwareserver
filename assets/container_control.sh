@@ -1,24 +1,25 @@
 #!/bin/bash
 
-#########################################################################
-#                          container_control.sh                         #
-#    this script makes it easier to build a new egroupware container    #
-# usage:        container_control.sh $action $name $pass1 $pass2 $port  #
-# Paramters:                                                            #
-#               $action create/stop/delete/start/update/full-delete     #
-#                       (full-delete deletes also database -all Your    #
-#                       data will be lost- use with cation!)            #
-#                       (start means existing container!)               # 
-#               $name   exchange with Your favorite name   (needed)     #
-#               $pass1  password for mysql admin    \   only used       #
-#               $pass2  password for egroupware user >  with parameter  #
-#               $port   which port should be used?  /   create!         #
-#-----------------------------------------------------------------------#
-#      V 2016-12-28-07-55  made by sneaky(x) or Rothaar Systems         #
-#                        dedicated to my family                         #
-#                   released under Apache 2.0 licence                   #
-#               http://www.apache.org/licenses/LICENSE-2.0              #
-#########################################################################
+##############################################################################
+#                          container_control.sh                              #
+#    this script makes it easier to build a new egroupware container         #
+# usage:        container_control.sh $action $name $pass1 $pass2 $port $path #
+# Paramters:                                                                 #
+#               $action create/stop/delete/start/update/full-delete          #
+#                       (full-delete deletes also database -all Your         #
+#                       data will be lost- use with cation!)                 #
+#                       (start means existing container!)                    # 
+#               $name   exchange with Your favorite name   (needed)          #
+#               $pass1  password for mysql admin    \   only used            #
+#               $pass2  password for egroupware user >  with parameter       #
+#               $port   which port should be used?  /   create!              #
+#				$path   subfolder for egroupware (optional)                  #
+#----------------------------------------------------------------------------#
+#      V 2016-12-29-07-42  made by sneaky(x) or Rothaar Systems              #
+#                        dedicated to my family                              #
+#                   released under Apache 2.0 licence                        #
+#               http://www.apache.org/licenses/LICENSE-2.0                   #
+##############################################################################
 
 if  [ -z $2 ]  ; then
         echo >&2 'error: missing parameters'
@@ -93,6 +94,7 @@ case "$1" in
 			-p $5:80 \
 			-v /home/egroupware/$2/data:/var/lib/egroupware \
 			--link mysql-egroupware-$2:mysql \
+			-e SUBFOLDER=$6 \
 			sneaky/egroupware
 		echo container was created/ updated
 	;;
