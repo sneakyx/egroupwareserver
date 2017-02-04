@@ -13,7 +13,7 @@ If you need more information on egroupware, just take a look here: [www.egroupwa
 Although this is a unofficial dockerfile, it uses just the official sources! 
 
 ### Version
-This dockerfile installs Version 16.1.20170118 of egroupware
+This dockerfile installs Version 16.1.20170203 of egroupware
 
 # 3. Installation / Configuration
 ## a) helpful script 
