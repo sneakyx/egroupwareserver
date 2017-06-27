@@ -11,7 +11,6 @@ RUN apt-get update \
         && tar -xjf /usr/share/egroupware.tar.bz2 -C /usr/share \
         && rm /usr/share/egroupware.tar.bz2
 # start manual installation
-
 RUN docker-php-ext-install mysqli \
 		&& docker-php-ext-install bz2 \
         && docker-php-ext-install pdo_mysql \
