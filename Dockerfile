@@ -1,6 +1,6 @@
 FROM php:5.6-apache
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2017-07-03-20-00
+# Version 2017-07-17-22-00
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
@@ -30,6 +30,9 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo date.timezone = $egr_timezone  >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo session.save_path = /var/tmp  >> /usr/local/etc/php/conf.d/uploads.ini
 
+RUN apt-get install -y libsmbclient-dev \
+	&& pecl install smbclient \
+	&& echo "extension=smbclient.so" > /usr/local/etc/php/conf.d/smbclient.ini
 
 COPY assets/docker-entrypoint.sh /bin/entrypoint.sh 
 COPY assets/apache.conf /etc/apache2/apache2.conf

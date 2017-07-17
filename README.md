@@ -5,6 +5,7 @@ You'll also need a MySQL or MariaDB container for the database.
 
 See also my [extended image](https://hub.docker.com/r/sneaky/egroupware-extended/), which is an extended egroupware (extended by my own apps)!
 
+New ! Now with Samba Support!
 
 # 2. Egroupware
 ### General
@@ -82,7 +83,7 @@ If the file header.inc.php already exists (former installation), the docker-entr
  
 If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
 
-# Additional info
+# 4. Additional info
 Change all passwords from 123456 to Your own password. 
 
 Remember to put the following informations external, otherwise all data will be lost after updating the image:
@@ -94,7 +95,17 @@ If You restart the docker container (former stoped with "docker stop xxx" and no
 
 	docker exec -it xxx /bin/docker-entrypoint.sh update
 
+# 5. Mount Your Samba Folders
+Login to Your docker container with
+
+	docker exec -it egroupware-xxx /bin/bash
+then create Your mount points with
+
+	filemanager/cli.php mount --user root_admin --password 123456 'smb://Workgroup\$user:$pass@adressOfServer/path' '/whereToMountInFilemanager'
+
 
 If you have any suggestions, questions or You need a special egroupware application, just contact me via: info@rothaarsystems.de
 
 [![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com") [Get your own image badge on microbadger.com!](https://microbadger.com)
+
+[![](https://images.microbadger.com/badges/image/sneaky/egroupware:master-smb.svg)](https://microbadger.com/images/sneaky/egroupware:master-smb "Get your own image badge on microbadger.com") [Get your own image badge on microbadger.com!](https://microbadger.com)
