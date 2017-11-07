@@ -1,6 +1,11 @@
 # 1. General info
 
-This dockerfile builds an eGroupware container. As You can see in the dockerfile, it is based on php 5.6.
+There are 2 versions: 
+- "master" is the actual 16.1 version (stable) - based on php 5.6
+- "develop" is the 17.1 version (release candidate) - based on php 7
+
+This dockerfile builds an eGroupware container. 
+
 You'll also need a MySQL or MariaDB container for the database.
 
 See also my [extended image](https://hub.docker.com/r/sneaky/egroupware-extended/), which is an extended egroupware (extended by my own apps)!
