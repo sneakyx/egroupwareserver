@@ -1,17 +1,16 @@
-FROM php:5.6-apache
+FROM php:7-apache
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2016-10-10-09-48
+# Version 2017-11-07-12-00
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
 RUN apt-get update \
         && apt-get install -y wget bzip2 libbz2-dev zlib1g-dev re2c libmcrypt-dev pwgen \
-        && wget -P /var/www https://github.com/EGroupware/egroupware/releases/download/16.1.20161006/egroupware-epl-16.1.20161006.tar.bz2\
-        && mv /var/www/egroupware*.tar.bz2 /var/www/egroupware.tar.bz2 \
-        && tar -xjf /var/www/egroupware.tar.bz2 -C /var/www/html \
-        && rm /var/www/egroupware.tar.bz2
+        && wget -P /usr/share https://github.com/EGroupware/egroupware/releases/download/17.1.20171023/egroupware-epl-17.1.20171023.tar.bz2 \
+        && mv /usr/share/egroupware*.tar.bz2 /usr/share/egroupware.tar.bz2 \
+        && tar -xjf /usr/share/egroupware.tar.bz2 -C /usr/share \
+        && rm /usr/share/egroupware.tar.bz2
 # start manual installation
-
 RUN docker-php-ext-install mysqli \
 		&& docker-php-ext-install bz2 \
         && docker-php-ext-install pdo_mysql \
@@ -31,15 +30,18 @@ RUN touch /usr/local/etc/php/conf.d/uploads.ini \
     && echo date.timezone = $egr_timezone  >> /usr/local/etc/php/conf.d/uploads.ini \
     && echo session.save_path = /var/tmp  >> /usr/local/etc/php/conf.d/uploads.ini
 
+RUN apt-get install -y libsmbclient-dev \
+	&& pecl install smbclient \
+	&& echo "extension=smbclient.so" > /usr/local/etc/php/conf.d/smbclient.ini
 
 COPY assets/docker-entrypoint.sh /bin/entrypoint.sh 
 COPY assets/apache.conf /etc/apache2/apache2.conf
 # there are two updated files
 # because manual installation of egroupware leaves some infos blank
-COPY assets/class*.* /var/www/html/egroupware/setup/inc/
+COPY assets/class*.* /usr/share/egroupware/setup/inc/
 
 RUN chmod +x /bin/entrypoint.sh \
-	&& chmod 644 /var/www/html/egroupware/setup/inc/*.* 
+	&& chmod 644 /usr/share/egroupware/setup/inc/*.* 
 
 EXPOSE 80 443
 

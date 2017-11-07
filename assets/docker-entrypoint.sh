@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-08-20-15-50
+# V2016-12-29-07-40
   
   
 # Replace {key} with value
@@ -11,7 +11,7 @@ set_config() {
 	value="$2"
 	php_escaped_value="$(php -r 'var_export($argv[1]);' "$value")"
 	sed_escaped_value="$(echo "$php_escaped_value" | sed 's/[\/&]/\\&/g')"
-    sed -ri "s/(['\"])?$key(['\"]).*/\'$key\' => $sed_escaped_value/" /var/lib/egroupware/header.inc.php
+    sed -ri "s/(['\"])?$key(['\"]).*/\'$key\' => $sed_escaped_value,/" /var/lib/egroupware/header.inc.php
 
 }
 
@@ -32,8 +32,8 @@ if [ -f /var/lib/egroupware/header.inc.php ] ;
 
 then
 	
-	set_config 'DB_HOST' "$MYSQL_PORT_3306_TCP_ADDR"
-	set_config 'DB_PORT' "$MYSQL_PORT_3306_TCP_PORT"
+	set_config 'db_host' "$MYSQL_PORT_3306_TCP_ADDR"
+	set_config 'db_port' "$MYSQL_PORT_3306_TCP_PORT"
 
 fi	
 		
@@ -53,11 +53,27 @@ echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/db-config.txt
 
 chown -R www-data:www-data /var/lib/egroupware
 
-ln -sf /var/lib/egroupware/header.inc.php /var/www/html/egroupware/header.inc.php
+ln -sf /var/lib/egroupware/header.inc.php /usr/share/egroupware/header.inc.php
 chmod 700 /var/lib/egroupware/header.inc.php
 
-# Apache gets grumpy about PID files pre-existing
-rm -f /var/run/apache2/apache2.pid
-exec apache2 -DFOREGROUND 
+if [ ${SUBFOLDER: -1} == "/" ]; then
+	# this is for leaving the last slash 
+ 	SUBFOLDER="${SUBFOLDER:0: -1}"
+fi
 
+if [ -z "$SUBFOLDER" ]; then
+	# this is for the case that no subfolder is passed  
+	rmdir /var/www/html
+elif [ ${SUBFOLDER:0:1} != "/" ]; then
+	# this is for the case that the first slash is forgotten
+	SUBFOLDER="/${SUBFOLDER}"
+fi
+
+if  [ $1 != "update" ]; then  # if container isn't restarted
+	# Apache gets grumpy about PID files pre-existing
+	rm -f /var/run/apache2/apache2.pid
+	ln -sf /usr/share/egroupware /var/www/html$SUBFOLDER
+	exec apache2 -DFOREGROUND
+	 
+fi
 exit 0
