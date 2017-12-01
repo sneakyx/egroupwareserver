@@ -16,7 +16,7 @@ This dockerfile installs Version 16.1.20160810 of egroupware
 # 1. Installation / Configuration
 ## a) helpful script 
 For starting, stopping and updating my egroupware containers, I use my script container_control.sh, which You can download from 
-[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
+[github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control_develop.sh)
 
 ## or b) without script
 
