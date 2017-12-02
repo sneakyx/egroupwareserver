@@ -44,35 +44,38 @@ fi
 mkdir --parents /var/lib/egroupware/default/backup
 mkdir --parents /var/lib/egroupware/default/files
 
-# create empty header file, if not exists
-touch /var/lib/egroupware/header.inc.php
-
 # create file with database infos
-echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR > /var/lib/egroupware/db-config.txt
-echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/db-config.txt  
+echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR > /var/lib/egroupware/config-now.txt
+echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/config-now.txt  
+echo 'www_dir = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 
 chown -R www-data:www-data /var/lib/egroupware
-
+# delete origin header.inc from container and use your header.inc
 ln -sf /var/lib/egroupware/header.inc.php /usr/share/egroupware/header.inc.php
 chmod 700 /var/lib/egroupware/header.inc.php
 
 if [ ${SUBFOLDER: -1} == "/" ]; then
 	# this is for leaving the last slash 
  	SUBFOLDER="${SUBFOLDER:0: -1}"
+ 	echo 'www_dir1 = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 fi
 
 if [ -z "$SUBFOLDER" ]; then
 	# this is for the case that no subfolder is passed  
 	rmdir /var/www/html
+	echo 'www_dir 2= ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 elif [ ${SUBFOLDER:0:1} != "/" ]; then
 	# this is for the case that the first slash is forgotten
 	SUBFOLDER="/${SUBFOLDER}"
+	echo 'www_dir3 = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 fi
 
 if  [ $1 != "update" ]; then  # if container isn't restarted
+	echo 'www_dir4 = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 	# Apache gets grumpy about PID files pre-existing
 	rm -f /var/run/apache2/apache2.pid
-	ln -sf /usr/share/egroupware /var/www/html$SUBFOLDER
+	mkdir -p /var/www/html$SUBFOLDER
+	ln -sf /usr/share/egroupware /var/www/html$SUBFOLDER$SUBFOLDER
 	exec apache2 -DFOREGROUND
 	 
 fi
