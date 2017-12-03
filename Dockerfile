@@ -25,9 +25,7 @@ RUN mv /etc/php/7.0/apache2/php.ini /etc/php/7.0/apache2/php.ini~ \
     && echo upload_max_filesize = 60M  >> /etc/php/7.0/apache2/php.ini
 
 COPY assets/docker-entrypoint.sh /bin/entrypoint.sh 
-#RUN mv /etc/apache2/apache2.conf /etc/apache2/apache2.conf~ \
-#	&& mkdir /var/www/html/egroupware
-#COPY assets/apache.conf /etc/apache2/apache2.conf
+
 # there are two updated files
 # because manual installation of egroupware leaves some infos blank
 COPY assets/class*.* /usr/share/egroupware/setup/inc/

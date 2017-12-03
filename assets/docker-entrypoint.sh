@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-12-29-07-40
+# V2017-12-03-10-20
   
   
 # Replace {key} with value
@@ -70,10 +70,8 @@ fi
 if  [ $1 != "update" ]; then  # if container isn't restarted
 	# Apache gets grumpy about PID files pre-existing
 	#rm -f /var/run/apache2/apache2.pid
-	#mkdir -p /var/www/html$SUBFOLDER
-	#ln -sf /usr/share/egroupware /var/www/html$SUBFOLDER$SUBFOLDER
+
 	exec /bin/bash -c "source /etc/apache2/envvars && apache2 -DFOREGROUND"
-	#service apache2 start
 	 
 fi
 exit 0
