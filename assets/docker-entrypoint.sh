@@ -52,7 +52,7 @@ echo 'www_dir = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 #chown -R www-data:www-data /var/lib/egroupware
 # delete origin header.inc from container and use your header.inc
 ln -sf /var/lib/egroupware/header.inc.php /usr/share/egroupware/header.inc.php
-chmod 700 /var/lib/egroupware/header.inc.php
+# chmod 700 /var/lib/egroupware/header.inc.php
 
 if [ ${SUBFOLDER: -1} == "/" ]; then
 	# this is for leaving the last slash 
