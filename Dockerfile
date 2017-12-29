@@ -23,7 +23,7 @@ RUN echo "Package: mariadb*" >> /etc/apt/preferences \
   php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-common php7.0-gd php7.0-json \
   php7.0-ldap php7.0-mbstring php7.0-mysql php7.0-opcache php7.0-readline \
   php7.0-tidy php7.0-xml php7.0-zip procps psmisc rename sgml-base ssl-cert \
-  ucf xml-core xz-utils cifs-utils -y
+  ucf xml-core xz-utils php-smbclient php-ldap -y
 	
 	
 # edit php.ini
