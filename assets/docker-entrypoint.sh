@@ -34,9 +34,9 @@ then
 	
 	set_config 'db_host' "$MYSQL_PORT_3306_TCP_ADDR"
 	set_config 'db_port' "$MYSQL_PORT_3306_TCP_PORT"
+	# this is for setting the new base directory of egroupware!
 	line_old="define('EGW_SERVER_ROOT','/var/www/html/egroupware');"
 	line_new="define('EGW_SERVER_ROOT','/usr/share/egroupware');"
-	# this is for setting the new base directory of egroupware!
 	sed "s%$line_old%$line_new%g" /var/lib/egroupware/header.inc.php
 
 fi	
