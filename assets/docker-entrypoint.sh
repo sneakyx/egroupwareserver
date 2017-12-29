@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2017-12-03-10-20
+# V2017-12-29-17-30
   
   
 # Replace {key} with value
@@ -34,6 +34,10 @@ then
 	
 	set_config 'db_host' "$MYSQL_PORT_3306_TCP_ADDR"
 	set_config 'db_port' "$MYSQL_PORT_3306_TCP_PORT"
+	line_old="define('EGW_SERVER_ROOT','/var/www/html/egroupware');"
+	line_new="define('EGW_SERVER_ROOT','/usr/share/egroupware');"
+	# this is for setting the new base directory of egroupware!
+	sed "s%$line_old%$line_new%g" /var/lib/egroupware/header.inc.php
 
 fi	
 		
