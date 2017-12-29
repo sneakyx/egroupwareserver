@@ -85,7 +85,7 @@ Now the installation imports also an existing database backup from egroupware!
 
 If the file header.inc.php already exists (former installation), the docker-entrypoint.sh updates the database host ip and port in the header.inc.php automaticly!
  
-If there's a new version of egroupware, don't forget to start the setup and update the database! 
+If You updated to a new version of egroupware, don't forget to start the setup and update the database! 
 
 	http://ipOfYourServer:4321/egroupware/setup 
 
