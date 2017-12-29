@@ -2,7 +2,7 @@
 set -e
 # this is a fork of docker-entrypoint.sh of jrenggli (see also visol/egroupware)
 # made by sneaky of Rothaar Systems (Andre Scholz)
-# V2016-12-29-07-40
+# V2017-12-29-17-30
   
   
 # Replace {key} with value
@@ -34,6 +34,10 @@ then
 	
 	set_config 'db_host' "$MYSQL_PORT_3306_TCP_ADDR"
 	set_config 'db_port' "$MYSQL_PORT_3306_TCP_PORT"
+	# this is for setting the new base directory of egroupware!
+	line_old="define('EGW_SERVER_ROOT','/var/www/html/egroupware');"
+	line_new="define('EGW_SERVER_ROOT','/usr/share/egroupware');"
+	sed "s%$line_old%$line_new%g" /var/lib/egroupware/header.inc.php
 
 fi	
 		
@@ -44,15 +48,13 @@ fi
 mkdir --parents /var/lib/egroupware/default/backup
 mkdir --parents /var/lib/egroupware/default/files
 
-# create empty header file, if not exists
-touch /var/lib/egroupware/header.inc.php
-
 # create file with database infos
-echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR > /var/lib/egroupware/db-config.txt
-echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/db-config.txt  
+echo 'db_host = ' $MYSQL_PORT_3306_TCP_ADDR > /var/lib/egroupware/config-now.txt
+echo 'db_port = ' $MYSQL_PORT_3306_TCP_PORT >> /var/lib/egroupware/config-now.txt  
+echo 'www_dir = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 
-chown -R www-data:www-data /var/lib/egroupware
-
+#chown -R www-data:www-data /var/lib/egroupware
+# delete origin header.inc from container and use your header.inc
 ln -sf /var/lib/egroupware/header.inc.php /usr/share/egroupware/header.inc.php
 chmod 700 /var/lib/egroupware/header.inc.php
 
@@ -63,7 +65,7 @@ fi
 
 if [ -z "$SUBFOLDER" ]; then
 	# this is for the case that no subfolder is passed  
-	rmdir /var/www/html
+	#rmdir /var/www/html
 elif [ ${SUBFOLDER:0:1} != "/" ]; then
 	# this is for the case that the first slash is forgotten
 	SUBFOLDER="/${SUBFOLDER}"
@@ -71,9 +73,9 @@ fi
 
 if  [ $1 != "update" ]; then  # if container isn't restarted
 	# Apache gets grumpy about PID files pre-existing
-	rm -f /var/run/apache2/apache2.pid
-	ln -sf /usr/share/egroupware /var/www/html$SUBFOLDER
-	exec apache2 -DFOREGROUND
+	#rm -f /var/run/apache2/apache2.pid
+
+	exec /bin/bash -c "source /etc/apache2/envvars && apache2 -DFOREGROUND"
 	 
 fi
 exit 0

@@ -1,8 +1,7 @@
 # 1. General info
 
-There are 2 versions: 
-- "master" is the actual 16.1 version (stable) - based on php 5.6
-- "develop" is the 17.1 version (release candidate) - based on php 7
+New- Now with 17.1 version of egroupware.
+And by using apt update && apt upgrade -y you can update now even egroupware!
 
 This dockerfile builds an eGroupware container. 
 
@@ -19,7 +18,7 @@ If you need more information on egroupware, just take a look here: [www.egroupwa
 Although this is a unofficial dockerfile, it uses just the official sources! 
 
 ### Version
-This dockerfile installs Version 16.1.20170415 of egroupware
+This dockerfile installs Version 17.1 of egroupware
 
 # 3. Installation / Configuration
 ## a) helpful script 
