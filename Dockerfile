@@ -1,21 +1,30 @@
 FROM debian:stretch
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2017-12-02-17-00
+# Version 2017-12-29-20-30
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
-RUN echo 'deb http://download.opensuse.org/repositories/server:/eGroupWare/Debian_9.0/ /' > /etc/apt/sources.list.d/egroupware-epl.list \
-		&& apt-get update \
+RUN apt-get update \
 		&& apt-get upgrade -y \
 		&& apt-get install wget gnupg -y
 # start egroupware installation
-RUN wget -nv https://download.opensuse.org/repositories/server:eGroupWare/Debian_9.0/Release.key -O Release.key \
-	&& apt-key add - < Release.key \
-	&& apt-get update 
 RUN echo "Package: mariadb*" >> /etc/apt/preferences \
 	&& echo "Pin: release *" >> /etc/apt/preferences \
 	&& echo "Pin-Priority: -1" >> /etc/apt/preferences \
-	&& apt-get install -y egroupware-epl 	
+	&& apt-get install    apache2 apache2-bin apache2-data apache2-utils bzip2  file fontconfig-config fonts-dejavu-core \
+  libapache2-mod-php libapache2-mod-php7.0 libapr1 libaprutil1 \
+  libaprutil1-dbd-sqlite3 libaprutil1-ldap libbsd0 libedit2 libexpat1 \
+  libfontconfig1 libfreetype6 libgd3 libgdbm3 libgpm2 libicu57 libjbig0 \
+  libjpeg62-turbo liblua5.2-0 libmagic-mgc libmagic1 libncurses5 libnghttp2-14 \
+  libperl5.24 libpng16-16 libprocps6 libssl1.0.2 libtidy5 libtiff5 libwebp6 \
+  libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxml2 libxpm4 libxslt1.1 \
+  libzip4 mime-support perl perl-modules-5.24 php-apcu php-apcu-bc php-bcmath \
+  php-bz2 php-common php-gd php-ldap php-mbstring php-mysql php-tidy php-zip \
+  php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-common php7.0-gd php7.0-json \
+  php7.0-ldap php7.0-mbstring php7.0-mysql php7.0-opcache php7.0-readline \
+  php7.0-tidy php7.0-xml php7.0-zip procps psmisc rename sgml-base ssl-cert \
+  ucf xml-core xz-utils cifs-utils -y
+	
 	
 # edit php.ini
 RUN mv /etc/php/7.0/apache2/php.ini /etc/php/7.0/apache2/php.ini~ \
