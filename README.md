@@ -18,7 +18,7 @@ If you need more information on egroupware, just take a look here: [www.egroupwa
 Although this is a unofficial dockerfile, it uses just the official sources! 
 
 ### Version
-This dockerfile installs Version 17.1 of egroupware
+This dockerfile installs Version 17.1 of egroupware (and works with apt update && apt upgrade)
 
 # 3. Installation / Configuration
 ## a) helpful script 
@@ -85,7 +85,9 @@ Now the installation imports also an existing database backup from egroupware!
 
 If the file header.inc.php already exists (former installation), the docker-entrypoint.sh updates the database host ip and port in the header.inc.php automaticly!
  
-If there's a new version of egroupware, You have to start the setup and update the database! (But egroupware will tell You this!) 
+If there's a new version of egroupware, don't forget to start the setup and update the database! 
+
+	http://ipOfYourServer:4321/egroupware/setup 
 
 # 4. Additional info
 Change all passwords from 123456 to Your own password. 
