@@ -1,6 +1,6 @@
 FROM debian:stretch
 MAINTAINER André Scholz <info@rothaarsystems.de>
-# Version 2017-12-29-21-20
+# Version 2018-01-08-17-52
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG egr_timezone=Europe/Berlin
@@ -23,8 +23,7 @@ RUN echo "Package: mariadb*" >> /etc/apt/preferences \
   php7.0-bcmath php7.0-bz2 php7.0-cli php7.0-common php7.0-gd php7.0-json \
   php7.0-ldap php7.0-mbstring php7.0-mysql php7.0-opcache php7.0-readline \
   php7.0-tidy php7.0-xml php7.0-zip procps psmisc rename sgml-base ssl-cert \
-  ucf xml-core xz-utils php-smbclient php-ldap -y
-	
+  ucf xml-core xz-utils php-smbclient php-ldap -y smbclient
 	
 # edit php.ini
 RUN mv /etc/php/7.0/apache2/php.ini /etc/php/7.0/apache2/php.ini~ \
