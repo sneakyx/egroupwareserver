@@ -1,6 +1,6 @@
 # General info
 
-This dockerfile builds an eGroupware container. As You can see in the dockerfile, it is based on php 5.6.
+This dockerfile builds an eGroupware container. As You can see in the dockerfile, it is based on php 7.
 You'll also need a MySQL or MariaDB container for the database.
 I wanted to install for personal use the visol/egroupware container, but I couldn't reach jrenggli at visol and it seems he doesn't update his egroupware dockerfile- so I made my own and not just updated his file. 
 
