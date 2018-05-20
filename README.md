@@ -8,6 +8,7 @@ I wanted to install for personal use the visol/egroupware container, but I could
 ### General
 Egroupware is a very powerful open source groupware programm. It consists of a calendar app, contacts, infolog, project manager, ticket system and more.
 If you need more information on egroupware, just take a look here: [www.egroupware.org](http://www.egroupware.org)
+
 Although this is a unofficial dockerfile, it uses just the official sources! 
 
 ### Version
