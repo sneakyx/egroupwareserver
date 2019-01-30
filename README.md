@@ -1,6 +1,7 @@
 # 1. General info
 
-New- Now with 17.1 version of egroupware.
+Works now with mysql 8.0
+
 And by using apt update && apt upgrade -y you can update now even egroupware!
 
 This dockerfile builds an eGroupware container. 
@@ -37,6 +38,11 @@ I suggest the following directory hierarchy:
 	mkdir -p /home/egroupware/xxx/mysql /home/egroupware/xxx/data
 -> Please replace xxx with Your favourite name! <-
 
+Important: /home/egroupware/$2/mysql.cnf create file with following text:
+
+    [mysqld]
+    default_authentication_plugin = mysql_native_password
+
 ### b) 2. start mysql container
 
 	docker run -d --name mysql-egroupware-xxx \
@@ -44,8 +50,10 @@ I suggest the following directory hierarchy:
 	-e MYSQL_DATABASE=egroupware \
 	-e MYSQL_USER=egroupware \
 	-e MYSQL_PASSWORD=123456 \
-	-v /home/egroupware/xxx/mysql:/var/lib/mysql mysql
-	
+	-v /home/egroupware/xxx/mysql:/var/lib/mysql \
+	-v /home/egroupware/$2/mysql.cnf:/etc/mysql/conf.d/egroupware.cnf \
+	mysql
+		
 -> Please replace xxx with Your favourite name and 123456 with Your password! <-
 
 ### b) 3. start egroupware container 
