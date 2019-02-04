@@ -10,7 +10,7 @@ You'll also need a MySQL or MariaDB container for the database.
 
 See also my [extended image](https://hub.docker.com/r/sneaky/egroupware-extended/), which is an extended egroupware (extended by my own apps)!
 
-New ! Now with Samba Support!
+With Samba Support!
 
 # 2. Egroupware
 ### General
@@ -27,48 +27,50 @@ For starting, stopping and updating my egroupware containers, I use my script co
 [github](https://github.com/sneakyx/egroupwareserver/blob/master/assets/container_control.sh)
 
 ## b)  without script
+I don't recommend that, but if You want to do this on own own, you have to write the following lines to get this egroupware container to running:
 
-### b) 1. Data directories (storage)
-First, it would be wise to create directories for storing everything in place. I usually pack everything into subfolders under the same superior directory. This way it's easier to create a backup using rsync. (Remember to stop the database before creating a backup!)
-I suggest the following directory hierarchy:
+    Variables for this script:
+    
+    $2= where to put all egroupware container data
+    $3= mysql root database password
+    $4= mysql egroupware password
+    $5= which port external
 
-/home/egroupware/xxx/mysql  	-> Database
-/home/egroupware/xxx/data  	-> Egroupware Files, backups and header.inc
+Script: (run this script aus sudo!)
 
-	mkdir -p /home/egroupware/xxx/mysql /home/egroupware/xxx/data
--> Please replace xxx with Your favourite name! <-
+        # creating folders
+		mkdir -p /home/egroupware/$2/mysql /home/egroupware/$2/data/default/backup /home/egroupware/$2/data/default/files
+		touch /home/egroupware/$2/data/header.inc.php
+        chown -R www-data:www-data /home/egroupware/$2/data
+        chmod 0700 /home/egroupware/$2/data/header.inc.php
+        # mysql config for egroupware, problems with new mysql 8.0
+        if [ ! -f "/home/egroupware/$2/mysql.cnf" ]; then
+            touch /home/egroupware/$2/mysql.cnf
+            echo -e "[mysqld]\ndefault_authentication_plugin= mysql_native_password" > /home/egroupware/$2/mysql.cnf
+        fi
 
-Important: /home/egroupware/$2/mysql.cnf create file with following text:
 
-    [mysqld]
-    default_authentication_plugin = mysql_native_password
+		# create and run mysql container
 
-### b) 2. start mysql container
-
-	docker run -d --name mysql-egroupware-xxx \
-	-e MYSQL_ROOT_PASSWORD=123456 \
-	-e MYSQL_DATABASE=egroupware \
-	-e MYSQL_USER=egroupware \
-	-e MYSQL_PASSWORD=123456 \
-	-v /home/egroupware/xxx/mysql:/var/lib/mysql \
-	-v /home/egroupware/$2/mysql.cnf:/etc/mysql/conf.d/egroupware.cnf \
-	mysql
+		docker run -d --name mysql-egroupware-$2 \
+			-e MYSQL_ROOT_PASSWORD=$3 \
+			-e MYSQL_DATABASE=egroupware \
+			-e MYSQL_USER=egroupware \
+			-e MYSQL_PASSWORD=$4 \
+			-v /home/egroupware/$2/mysql:/var/lib/mysql \
+			-v /home/egroupware/$2/mysql.cnf:/etc/mysql/conf.d/egroupware.cnf \
+			mysql
 		
--> Please replace xxx with Your favourite name and 123456 with Your password! <-
-
-### b) 3. start egroupware container 
-To start the egroupware container, just use:
-
-	docker run -d \
-	--name egroupware-xxx \
-	-p 4321:80 \
-	-v /home/egroupware/xxx/data:/var/lib/egroupware \
-	-e SUBFOLDER=/egroupware \
-	--link mysql-egroupware-xxx:mysql \
-	sneaky/egroupware	
-	
--> Please replace xxx with Your favourite name and 4321 with the port projected for using.<-
--> The SUBFOLDER variable is optional, if You leave it, the login address is without subfolder!<-
+		# create and run egroupware container
+		
+		docker run -d \
+			--name egroupware-$2 \
+			-p $5:80 \
+			-v /home/egroupware/$2/data:/var/lib/egroupware \
+			--link mysql-egroupware-$2:mysql \
+			-e SUBFOLDER=$6 \
+			sneaky/egroupware
+		echo container was created/ updated 
 
 ## 3.3 Setup Egroupware
 ### a) First time logging in?
@@ -118,8 +120,5 @@ then create Your mount points with
 	filemanager/cli.php mount --user root_admin --password 123456 'smb://Workgroup\$user:$pass@adressOfServer/path' '/whereToMountInFilemanager'
 
 
-If you have any suggestions, questions or You need a special egroupware application, just contact me via: info@rothaarsystems.de
 
 [![](https://images.microbadger.com/badges/image/sneaky/egroupware.svg)](https://microbadger.com/images/sneaky/egroupware "Get your own image badge on microbadger.com") [Get your own image badge on microbadger.com!](https://microbadger.com)
-
-[![](https://images.microbadger.com/badges/image/sneaky/egroupware:master-smb.svg)](https://microbadger.com/images/sneaky/egroupware:master-smb "Get your own image badge on microbadger.com") [Get your own image badge on microbadger.com!](https://microbadger.com)
