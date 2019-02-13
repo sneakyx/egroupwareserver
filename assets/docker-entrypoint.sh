@@ -58,7 +58,7 @@ echo 'www_dir = ' ${SUBFOLDER} >> /var/lib/egroupware/config-now.txt
 ln -sf /var/lib/egroupware/header.inc.php /usr/share/egroupware/header.inc.php
 chmod 700 /var/lib/egroupware/header.inc.php
 
-if [ ${SUBFOLDER: -1} == "/" ]; then
+if [ "${SUBFOLDER: -1}" == "/" ]; then
 	# this is for leaving the last slash 
  	SUBFOLDER="${SUBFOLDER:0: -1}"
 fi
@@ -66,7 +66,7 @@ fi
 if [ -z "$SUBFOLDER" ]; then
 	# this is for the case that no subfolder is passed  
 	#rmdir /var/www/html
-elif [ ${SUBFOLDER:0:1} != "/" ]; then
+elif [ "${SUBFOLDER:0:1}" != "/" ]; then
 	# this is for the case that the first slash is forgotten
 	SUBFOLDER="/${SUBFOLDER}"
 fi
