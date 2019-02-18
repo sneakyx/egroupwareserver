@@ -65,7 +65,7 @@ fi
 
 if [ -z "$SUBFOLDER" ]; then
 	# this is for the case that no subfolder is passed  
-	#rmdir /var/www/html
+	echo rmdir /var/www/html
 elif [ "${SUBFOLDER:0:1}" != "/" ]; then
 	# this is for the case that the first slash is forgotten
 	SUBFOLDER="/${SUBFOLDER}"
