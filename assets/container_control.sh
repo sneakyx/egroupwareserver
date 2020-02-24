@@ -66,9 +66,9 @@ case "$1" in
 		docker stop mysql-egroupware-$2 egroupware-$2
 		docker rm mysql-egroupware-$2 egroupware-$2
 		
-	;&
+	;;
 	
-create)
+	create)
 		# creates new images
 		if  [ -z $3 ] && [ -z $4 ] && [ -z $5 ]; then
 	        echo >&2 'error: missing parameters'
